@@ -6,9 +6,6 @@ import ItemCard from './components/ItemCard';
 import SalesSummary from './components/SalesSummary';
 import RecentActivity from './components/RecentActivity';
 import { getDishes } from './services/api';
-import { io } from 'socket.io-client';
-
-const socket = io('http://localhost:5000');
 
 function App() {
   const [dishes, setDishes] = useState([]);
@@ -24,17 +21,6 @@ function App() {
     };
 
     fetchDishes();
-    socket.on('dishUpdated', (updatedDish) => {
-      setDishes((prevDishes) =>
-        prevDishes.map((dish) =>
-          dish._id === updatedDish._id ? updatedDish : dish
-        )
-      );
-    });
-
-    return () => {
-      socket.off('dishUpdated');
-    };
   }, []);
 
   return (
@@ -62,7 +48,4 @@ function App() {
 }
 
 export default App;
-
-
-
 

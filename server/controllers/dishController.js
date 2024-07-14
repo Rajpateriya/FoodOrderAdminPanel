@@ -20,6 +20,7 @@ exports.togglePublishStatus = async (req, res) => {
     }
     dish.isPublished = !dish.isPublished;
     await dish.save();
+  
     res.status(200).json(dish);
   } catch (err) {
     console.error(err.message);

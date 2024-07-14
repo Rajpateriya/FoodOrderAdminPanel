@@ -1,24 +1,9 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 
 function ItemCard({ dish }) {
   const [isPublished, setIsPublished] = useState(dish.isPublished);
-
-  useEffect(() => {
-    const eventSource = new EventSource('http://localhost:5000/api/sse/dishStatus');
-
-    eventSource.onmessage = (event) => {
-      const updatedStatus = JSON.parse(event.data);
-      if (updatedStatus.dishId === dish.dishId) {
-        setIsPublished(updatedStatus.isPublished);
-      }
-    };
-
-    return () => {
-      eventSource.close();
-    };
-  }, [dish.dishId]);
 
   const handleTogglePublish = async () => {
     try {
